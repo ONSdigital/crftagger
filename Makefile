@@ -12,7 +12,7 @@ ifeq ($(OS),Windows)
 	TARGET=libcrftagger.dll
 	LIB=$(HOME)/local/win/lib
 
-	export CPATH=$(HOME)/local/win/include:/usr/java/latest/include:/usr/lib/jvm/java-1.8.0/include:/usr/lib/jvm/java-1.8.0/include/linux:/usr/java/latest/include/linux
+	export CPATH=$(HOME)/local/win/include:/usr/java/latest/include:/usr/lib/jvm/jdk-17/include:/usr/lib/jvm/jdk-17/include/linux:/usr/java/latest/include/linux
 else
 	UNAME=$(shell uname -s)
 	
@@ -28,10 +28,10 @@ else
 
 		export CPATH=$(HOME)/local/include:/System/Library/Frameworks/JavaVM.framework/Versions/Current/Headers
 	else
-		TARGET=libcrftagger.so
+		TARGET=libcrftagger-linux.so
 		LIB_OPTIONS=-l:libcrfsuite.a -l:libcqdb.a -l:liblbfgs.a
 
-		export CPATH=$(HOME)/local/include:/usr/java/latest/include:/usr/lib/jvm/java-1.8.0/include:/usr/lib/jvm/java-1.8.0/include/linux:/usr/java/latest/include/linux
+		export CPATH=$(HOME)/local/include:/usr/java/latest/include:/usr/lib/jvm/jdk-17/include:/usr/lib/jvm/jdk-17/include/linux:/usr/java/latest/include/linux
 	endif
 endif
 
@@ -40,7 +40,7 @@ endif
 
 $(TARGET): $(OBJ)
 	$(RMF_DYNAMIC_LIBS)
-	$(CC) $^ -shared -o $@ -L$(LIB) $(LIB_OPTIONS)
+	$(CC) $^ -shared -o $@ -L$(LIB) $(LIB_OPTIONS) -lm
 
 all: $(TARGET)
 
